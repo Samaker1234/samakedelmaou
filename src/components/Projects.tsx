@@ -77,53 +77,53 @@ export default function Projects() {
       {/* Modal pour les détails du projet */}
       {selectedProject && (
         <div
-          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-2 sm:p-4"
           onClick={() => setSelectedProject(null)}
         >
           <div
-            className="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col"
+            className="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-4xl max-h-[95vh] sm:max-h-[90vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-6 border-b border-gray-800 flex-shrink-0">
+            <div className="p-4 sm:p-6 border-b border-gray-800 flex-shrink-0">
               <div className="flex items-center justify-between">
-                <h3 className="text-2xl font-bold text-white">{selectedProject.title}</h3>
+                <h3 className="text-lg sm:text-2xl font-bold text-white">{selectedProject.title}</h3>
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-white transition-colors p-1"
                 >
-                  <X className="w-6 h-6" />
+                  <X className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row">
+            <div className="flex flex-col md:flex-row overflow-hidden flex-1">
               {selectedProject.image_url && (
-                <div className="md:w-1/2 p-6 flex-shrink-0">
+                <div className="md:w-1/2 p-3 sm:p-6 flex-shrink-0">
                   <img
                     src={selectedProject.image_url}
                     alt={selectedProject.title}
-                    className="w-full h-64 md:h-full object-cover rounded-lg"
+                    className="w-full h-40 sm:h-64 md:h-full object-cover rounded-lg"
                   />
                 </div>
               )}
 
-              <div className="md:w-1/2 p-6 overflow-y-auto flex-1">
-                <div className="mb-4">
-                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full border bg-cyan-500/10 text-cyan-400 border-cyan-500/20">
+              <div className="md:w-1/2 p-3 sm:p-6 overflow-y-auto flex-1">
+                <div className="mb-3 sm:mb-4">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2 sm:px-3 py-1 rounded-full border bg-cyan-500/10 text-cyan-400 border-cyan-500/20">
                     <Tag className="w-3 h-3" />
                     {selectedProject.category}
                   </span>
                 </div>
 
-                <p className="text-gray-300 text-base mb-6 leading-relaxed">{selectedProject.description}</p>
+                <p className="text-gray-300 text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed">{selectedProject.description}</p>
 
-                <div className="mb-6">
-                  <h4 className="text-lg font-semibold text-white mb-3">Technologies utilisées</h4>
-                  <div className="flex flex-wrap gap-2">
+                <div className="mb-4 sm:mb-6">
+                  <h4 className="text-base sm:text-lg font-semibold text-white mb-2 sm:mb-3">Technologies utilisées</h4>
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {selectedProject.tools.map((tool) => (
                       <span
                         key={tool}
-                        className="bg-gray-800 text-gray-300 text-sm px-3 py-1 rounded-md font-medium"
+                        className="bg-gray-800 text-gray-300 text-xs sm:text-sm px-2 sm:px-3 py-1 rounded-md font-medium"
                       >
                         {tool}
                       </span>
@@ -131,12 +131,12 @@ export default function Projects() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 pt-4 border-t border-gray-800">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 pt-3 sm:pt-4 border-t border-gray-800">
                   <a
                     href={selectedProject.github_url}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-2 text-sm text-gray-400 hover:text-white font-medium transition-colors duration-200"
+                    className="flex items-center gap-2 text-xs sm:text-sm text-gray-400 hover:text-white font-medium transition-colors duration-200"
                   >
                     <Github className="w-4 h-4" />
                     Voir le code
@@ -146,7 +146,7 @@ export default function Projects() {
                       href={selectedProject.demo_url}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 font-medium transition-colors duration-200"
+                      className="flex items-center gap-2 text-xs sm:text-sm text-cyan-400 hover:text-cyan-300 font-medium transition-colors duration-200"
                     >
                       Démo en direct
                       <ExternalLink className="w-3.5 h-3.5" />

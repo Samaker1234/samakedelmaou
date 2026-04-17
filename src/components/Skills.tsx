@@ -177,42 +177,42 @@ export default function Skills() {
       {/* Modal pour les détails */}
       {selectedCategory && (
         <div
-          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-2 sm:p-4"
           onClick={() => setSelectedCategory(null)}
         >
           <div
-            className="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col"
+            className="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-6 border-b border-gray-800 flex-shrink-0">
+            <div className="p-4 sm:p-6 border-b border-gray-800 flex-shrink-0">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className={`p-3 rounded-lg border ${iconColorMap[selectedCategory.color]}`}>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className={`p-2 sm:p-3 rounded-lg border ${iconColorMap[selectedCategory.color]}`}>
                     {selectedCategory.icon}
                   </div>
-                  <h3 className="text-2xl font-bold text-white">{selectedCategory.label}</h3>
+                  <h3 className="text-lg sm:text-2xl font-bold text-white">{selectedCategory.label}</h3>
                 </div>
                 <button
                   onClick={() => setSelectedCategory(null)}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 hover:text-white transition-colors p-1"
                 >
-                  <X className="w-6 h-6" />
+                  <X className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
               </div>
             </div>
 
-            <div className="p-6 overflow-y-auto flex-1">
-              <p className="text-gray-300 text-base mb-6 leading-relaxed">{selectedCategory.description}</p>
+            <div className="p-4 sm:p-6 overflow-y-auto flex-1">
+              <p className="text-gray-300 text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed">{selectedCategory.description}</p>
 
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-white mb-3">Compétences</h4>
+              <div className="space-y-3 sm:space-y-4">
+                <h4 className="text-base sm:text-lg font-semibold text-white mb-2 sm:mb-3">Compétences</h4>
                 {selectedCategory.skills.map((skill) => (
                   <div key={skill.id}>
-                    <div className="flex justify-between text-sm mb-1">
+                    <div className="flex justify-between text-xs sm:text-sm mb-1">
                       <span className="text-gray-300">{skill.name}</span>
                       <span className="text-gray-400">{skill.level}%</span>
                     </div>
-                    <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
+                    <div className="h-1.5 sm:h-2 bg-gray-800 rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full ${colorMap[selectedCategory.color]} transition-all duration-700`}
                         style={{ width: `${skill.level}%` }}
