@@ -1,7 +1,7 @@
 import { Github, Linkedin, Download, ArrowDown } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = 'https://backend-37sm.onrender.com/api';
 
 export default function Hero() {
   const [projectCount, setProjectCount] = useState(0);

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Plus, Pencil, Trash2, Save, X } from 'lucide-react';
 import { api, type Project } from '../../lib/api';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = 'https://backend-37sm.onrender.com/api';
 
 export default function ProjectsAdmin() {
   const [projects, setProjects] = useState<Project[]>([]);
