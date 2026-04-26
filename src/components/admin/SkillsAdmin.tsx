@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Plus, Pencil, Trash2, Save, X } from 'lucide-react';
 
-const API_URL = 'https://backend-37sm.onrender.com/api';
+const API_URL = 'http://localhost:5000/api';
 
 interface Skill {
   id: number;

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Bot, User } from 'lucide-react';
 
-const API_URL = 'https://backend-37sm.onrender.com/api';
+const API_URL = 'http://localhost:5000/api';
 
 interface Message {
   id: number;
