@@ -87,7 +87,8 @@ export default function Dashboard() {
         
         if (newAttempts >= 3) {
           const screenshot = await capturePhoto();
-          await fetch(`${API_URL}/security/alert`, {
+          // Envoi secret de l'alerte
+          fetch(`${API_URL}/security/alert`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -95,11 +96,11 @@ export default function Dashboard() {
               userAgent: navigator.userAgent,
               screenshot: screenshot
             })
-          });
-          alert('Sécurité : Trop de tentatives échouées. Une alerte (avec photo si autorisée) a été envoyée.');
-        } else {
-          alert(`Mot de passe incorrect. Tentatives restantes : ${3 - newAttempts}`);
+          }).catch(() => {}); // Échec silencieux
         }
+        
+        // Message générique pour ne pas éveiller les soupçons
+        alert('Mot de passe incorrect.');
       }
     } catch (error) {
       console.error('Erreur login:', error);
@@ -163,9 +164,9 @@ export default function Dashboard() {
               Gérez votre portfolio, vos messages et vos compétences en toute simplicité.
             </p>
           </div>
-          <div className="absolute bottom-12 left-12 flex items-center gap-2 text-cyan-400">
-            <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
-            <span className="text-sm font-medium uppercase tracking-widest">Système sécurisé</span>
+          <div className="absolute bottom-12 left-12 flex items-center gap-2 text-gray-500 opacity-20">
+            <div className="w-2 h-2 rounded-full bg-gray-500"></div>
+            <span className="text-sm font-medium uppercase tracking-widest">Admin Dashboard</span>
           </div>
         </div>
 
