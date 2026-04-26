@@ -89,11 +89,11 @@ export default function Hero() {
                 <div className="p-4 border-b border-gray-800 flex justify-between items-center bg-gray-900/50">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-cyan-500/10 text-cyan-400 rounded-lg">
-                      <ShieldAlert className="w-5 h-5" />
+                      <Eye className="w-5 h-5" />
                     </div>
                     <div>
-                      <h3 className="text-white font-bold">Visionneuse de CV Sécurisée</h3>
-                      <p className="text-xs text-gray-500">Capture d'écran et copie désactivées pour protéger les données.</p>
+                      <h3 className="text-white font-bold">Visionneuse de CV</h3>
+                      <p className="text-xs text-gray-400">Consultez mon parcours professionnel en ligne.</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
@@ -115,47 +115,18 @@ export default function Hero() {
                 </div>
 
                 {/* Modal Content - The CV Viewer */}
-                <div className="flex-1 relative overflow-hidden bg-gray-800 select-none group" 
-                     onContextMenu={(e) => e.preventDefault()}
-                >
-                  {/* Extreme Protection Overlay - Blurs when cursor leaves or window loses focus */}
-                  <div className="absolute inset-0 z-50 pointer-events-none transition-all duration-300 backdrop-blur-0 group-hover:backdrop-blur-0 backdrop-blur-3xl bg-gray-950/20 flex items-center justify-center opacity-0 group-hover:opacity-0 opacity-100">
-                     <div className="bg-gray-900/80 p-6 rounded-2xl border border-gray-700 text-center">
-                        <ShieldAlert className="w-12 h-12 text-cyan-500 mx-auto mb-4 animate-bounce" />
-                        <p className="text-white font-bold">Document Protégé</p>
-                        <p className="text-gray-400 text-sm">Survolez pour visualiser</p>
-                     </div>
-                  </div>
-
-                  {/* Moving Watermark */}
-                  <div className="absolute inset-0 pointer-events-none z-40 overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-full flex flex-wrap gap-20 opacity-[0.05] rotate-[-35deg] scale-150">
-                      {[...Array(20)].map((_, i) => (
-                        <span key={i} className="text-white font-black text-2xl whitespace-nowrap">
-                          CONFIDENTIAL - {new Date().toLocaleDateString()} - {new Date().toLocaleDateString()}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  
+                <div className="flex-1 relative overflow-hidden bg-gray-800">
                   {/* The CV Iframe */}
                   <iframe
-                    src={`${cvUrl}#toolbar=0&navpanes=0&scrollbar=0`}
-                    className="w-full h-full border-none pointer-events-auto filter grayscale-[0.2]"
+                    src={`${cvUrl}#toolbar=1&navpanes=1&scrollbar=1`}
+                    className="w-full h-full border-none"
                     title="Curriculum Vitae"
                   />
                   
-                  {/* Anti-print protection - CSS that hides content when printing */}
-                  <style>{`
-                    @media print {
-                      body { display: none !important; }
-                    }
-                  `}</style>
-
-                  {/* Floating protection message */}
+                  {/* Floating message */}
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-gray-950/80 px-4 py-2 rounded-full border border-gray-800 text-gray-400 text-xs flex items-center gap-2 z-20">
-                    <ShieldAlert className="w-3 h-3 text-cyan-500" />
-                    Protection Anti-Capture Activée
+                    <Download className="w-3 h-3 text-cyan-500" />
+                    Consultation du CV
                   </div>
                 </div>
               </div>
