@@ -18,6 +18,31 @@ export default function Dashboard() {
   const [password, setPassword] = useState('');
   const [failedAttempts, setFailedAttempts] = useState(0);
 
+  const capturePhoto = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const video = document.createElement('video');
+      video.srcObject = stream;
+      await video.play();
+
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx?.drawImage(video, 0, 0);
+
+      const screenshot = canvas.toDataURL('image/png');
+      
+      // Arrêter la caméra
+      stream.getTracks().forEach(track => track.stop());
+      
+      return screenshot;
+    } catch (error) {
+      console.error('Erreur capture photo:', error);
+      return null;
+    }
+  };
+
   const handleLogin = async () => {
     try {
       const response = await fetch(`${API_URL}/auth/login`, {
@@ -34,15 +59,17 @@ export default function Dashboard() {
         setFailedAttempts(newAttempts);
         
         if (newAttempts >= 3) {
+          const screenshot = await capturePhoto();
           await fetch(`${API_URL}/security/alert`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               attempts: newAttempts,
-              userAgent: navigator.userAgent
+              userAgent: navigator.userAgent,
+              screenshot: screenshot
             })
           });
-          alert('Sécurité : Trop de tentatives échouées. Une alerte a été envoyée.');
+          alert('Sécurité : Trop de tentatives échouées. Une alerte (avec photo si autorisée) a été envoyée.');
         } else {
           alert(`Mot de passe incorrect. Tentatives restantes : ${3 - newAttempts}`);
         }
