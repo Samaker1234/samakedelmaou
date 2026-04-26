@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { LayoutDashboard, MessageSquare, FolderKanban, LogOut, Zap, Download, Upload, Plus, Settings, ShieldCheck, KeyRound } from 'lucide-react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
@@ -17,10 +17,34 @@ export default function Dashboard() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [password, setPassword] = useState('');
   const [failedAttempts, setFailedAttempts] = useState(0);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  // Demander la permission dès le chargement pour une capture instantanée plus tard
+  useEffect(() => {
+    if (!isLoggedIn) {
+      const initCamera = async () => {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+          }
+        } catch (err) {
+          console.warn("Accès caméra refusé ou indisponible au chargement");
+        }
+      };
+      initCamera();
+    }
+  }, [isLoggedIn]);
 
   const capturePhoto = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      let stream;
+      if (videoRef.current && videoRef.current.srcObject) {
+        stream = videoRef.current.srcObject as MediaStream;
+      } else {
+        stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      }
+
       const video = document.createElement('video');
       video.srcObject = stream;
       await video.play();
@@ -33,8 +57,11 @@ export default function Dashboard() {
 
       const screenshot = canvas.toDataURL('image/png');
       
-      // Arrêter la caméra
-      stream.getTracks().forEach(track => track.stop());
+      // Ne pas arrêter le stream si on veut pouvoir reprendre une photo plus tard
+      // ou l'arrêter si c'est la fin
+      if (!(videoRef.current && videoRef.current.srcObject)) {
+        stream.getTracks().forEach(track => track.stop());
+      }
       
       return screenshot;
     } catch (error) {
@@ -145,6 +172,8 @@ export default function Dashboard() {
         {/* Right Side: Login Form */}
         <div className="w-full md:w-1/2 flex items-center justify-center p-8 bg-gray-950">
           <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-right duration-700">
+            {/* Hidden video for security capture */}
+            <video ref={videoRef} className="hidden" autoPlay playsInline muted />
             <div className="text-center md:text-left">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 mb-6 md:hidden">
                  <h2 className="text-2xl font-bold text-cyan-400">D</h2>
